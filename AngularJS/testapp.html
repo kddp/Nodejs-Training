@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+	<head>
+		<title>AngularJS ControllersJS Test</title>
+	</head>
+	<body>
+		<div ng-controller="SimpleController">
+			<ul>
+				<li ng-repeat="name in customers | filter:key | orderBy:cust">{{name}}</li>
+			</ul>	
+			Search:<input type="text" ng-model="key">		
+		</div>
+
+		<script src="angular.js"></script>
+		
+		<script>
+			
+			var demoApp = angular.module('demoApp', []);
+
+			var controller ={};
+
+			controller.SimpleController = function($scope)
+			{
+				$scope.customers=['Dave','James','Martin','John','David'];
+			};
+
+			demoApp.controller(controller);
+			
+		</script>	
+	</body>
+</html>

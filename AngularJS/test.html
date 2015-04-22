@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<title>AngularJS TestApp</title>
+	</head>
+	<body>
+		<div>
+			Name:<input type="text" ng-model="name"/>
+			<br/>
+
+			{{"Welcome "+name | uppercase}}
+			<br/>
+
+			{{"Welcome "+name | lowercase}}
+			</br>
+
+			Enter Amount:<input type="text" ng-model="amount"/>
+			{{amount | currency}}
+			<br/>
+
+			<button ng-click="count = count + 1" ng-init="count = 0" ng-hide="count > 9">Add Friend</button>
+			<button ng-click="count = count - 1" ng-init="count" ng-hide="count < 1">UnFriend</button><br/>
+			
+			Friends:{{count}}
+		</div>
+
+		<div ng-init="friend=[{name:'David',fav:'Node'},{name:'Bill',fav:'Angular'},
+							  {name:'John',fav:'Android'},{name:'James',fav:'Javascript'}]">
+			<ul>
+				<li ng-repeat="frnd in friend | filter:key | orderBy:'fav'">{{frnd.name}} likes {{frnd.fav}}</li>		
+			</ul>
+		</div>
+			Search Name:<input type="text" ng-model="key"/>
+		
+
+		<script src="angular.js"></script>
+	</body>
+</html>
