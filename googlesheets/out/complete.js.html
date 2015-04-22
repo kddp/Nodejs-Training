@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: complete.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: complete.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ *@module       logger
+ *@desc         This module is used with weather request module to NAVTECH
+ *              If thier is no response from NAVTECH after a weather request is made, 
+ *              this module sends an email to all stake holders &amp; logs to google spreedsheet.
+ *              
+ *              Note: I have used my gmail id.also I have used database name hello-world
+ *              in couchdb for demo purpose.
+ *        
+ *              @link to my google-spreedsheet:
+ *              https://docs.google.com/spreadsheets/d/1xWZtYxwlvR-tN_6JzSA7gx8c6KbA1Jm4c2bHZ793_wQ/edit#gid=0              
+ *
+ *@usage        Reporting if time required for response is more.
+ *@author       Abhishek
+ *@date         Dec 1, 2014
+ *Revision History
+ *Date                  Version                 Author                  Description
+ *Dec 1, 2014           v1.0                          
+ */
+
+ /**
+  *@module        edit-google-spreadsheet
+  *@desc          This module is used for reading and writing to Google Spreadsheets.
+  *               Note: I have used my gmail id for the demo.          
+  *
+  *@usage        To access Google spreedsheet
+  *@author       Jaime Pillora
+  *@date         Dec 1, 2014
+  *Revision History
+  *Date                  Version                 Author                  Description  
+  *Dec 1, 2014            v0.2.13               Jaime Pillora
+  *                
+  */
+
+ /**
+  *@module        nano
+  *@desc          This module is used to access couchdb.For the purpose of demo,
+  *               Note: I have set my couchdb at my localhost:5984 
+  * 
+  *@usage         To access CouchDB
+  *@author        Johannes J. Schmidt
+  *@date          Dec 1, 2014
+  *Revision History
+  *Date                  Version                 Author                  Description
+  *Dec 1,2014            v6.0.2014              Johannes J. Schmidt
+  *                  
+  */
+
+ /**
+  *@module        nodemailer
+  *@desc          This module is used for sending emails.   
+  *               Note: I have configured my gmail id for this.           
+  *
+  *@usage        To send email.
+  *@author       Andris Reinman
+  *@date         Dec 1, 2014
+  *Revision History
+  *Date                  Version                 Author                  Description 
+  *Dec 1, 2014            v1.3.0              Andris Reinman
+  *                
+  */
+
+ /**
+  *@module       nodemailer-smtp-pool
+  *@desc         This module is used to create SMTP transport for nodemailer              
+  *
+  *@usage        To create transport for nodemailer module.
+  *@author       Andris Reinman
+  *@date         Dec 1, 2014
+  *Revision History
+  *Date                 Version                 Author                  Description
+  *Dec 1,2014           v0.1.8              Andris Reinman
+  */
+
+ var spreadsheet = require('edit-google-spreadsheet');
+ var nano = require('nano')('http://localhost:5984');
+ var nodemailer = require('nodemailer');
+ var smtpPool = require('nodemailer-smtp-pool');
+
+/**
+ *@param {object} generator  create oauth2 (standard to authorization)
+ *@property {string}  user gmail id
+ *@property {string} clientId  Client ID value
+ *@property {string} clientSecret  Client secret value
+ *@property {string} refreshToken  Refresh token for an user
+ *
+ */
+ var generator = require('xoauth2').createXOAuth2Generator({
+                                user: "nag.abhi2006@gmail.com", // Your gmail address.
+                                clientId: "780120602790-7er43b0m89r8h7q4ov4gdugkg1dsmq63.apps.googleusercontent.com",
+                                clientSecret: "9AvPrkVvZUpuB3DVjkNs1PQR",
+                                refreshToken: "1/RXDa82_gVXlCtXHWn4KjcFDH8QGXAhbH-BFJdBuZj0oMEudVrK5jSpoR30zcRFq6"
+                        });
+
+/**
+ *@property {object} transport create reusable transporter object using SMTP transport
+ *@property {string} service name of the inbuilt service like gmail,AWS etc 
+ *@property {object} auth
+ *@propert maxConnection max no of connection at a time
+ *@property maxMessages max no of messages sent at a time
+ */
+ var transport = nodemailer.createTransport(smtpPool({
+                    service: 'gmail',
+                    auth: {
+                            xoauth2: generator
+                          },
+                    maxConnections: 10,
+                    maxMessages: 10
+                }));
+
+/**
+ *@property {object} mailOption
+ *@property {string} from senders name
+ *@property {string} to recievers name
+ *@property {string} subject email subject
+ *@property {string} html body of email
+ *
+ *
+ */
+var mailOptions = {
+                        from: 'Abhishek Nag', 
+                        to: ['nag.abhi2006@gmail.com'] ,
+                        subject: 'Sending email using NodeJS', 
+                        html: '&lt;h1>Hello World&lt;/h1>&lt;br/>&lt;b>&lt;Hello!!!>&lt;/b>&lt;/br>This mail is from nodemailer.'
+                  };
+
+ 
+ //accessing database hello-world from couchdb
+ var hellodb = nano.use('hello-world');
+ 
+ var listOfObjs = new Array();
+ var thresholdTime = 3;
+
+ //accessing couchdb and getting all the data and storing to array of objects(listOfObjs)
+  hellodb.list(function(err, body) {
+      if (!err) {
+        body.rows.forEach(function(doc) {
+              var ids = doc.id;
+              hellodb.get(ids, function(err, data)
+              { 
+                //if (request time - response time) > threshold time, then send email and add to spreedsheet          
+                if((data.responseTime - data.requestTime) > thresholdTime)
+                {
+                  console.log("Sending Email...");
+
+                  var obj = new Object();
+
+                  obj.item = data.item;
+                  obj.requestTime = data.requestTime;
+                  obj.responseTime = data.responseTime;
+
+                  listOfObjs.push(obj);
+
+                  //sending email
+                  transport.sendMail(mailOptions, function(error, response) {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log(response);
+                      }
+                      transport.close();
+                    });
+                }    
+                else
+                {
+                    console.log("Every is OK...");
+                }    
+            });
+          });
+      }
+    });
+
+/**
+ *Accessing the spreedsheet and adding data to it
+ *
+ *@param {string} spreedsheetName : Name of the spreedsheet
+ *@param {string} woksheetName : Name of the worksheet
+ *@param {object} oauth : credentials to access spreedsheet
+ *
+ */
+  spreadsheet.load({
+    debug: true,
+    spreadsheetName: 'Test',
+    worksheetName: 'Sheet1', 
+    oauth : {
+              email: '780120602790-k2dk9s8lfoqnp19724f4udej91tau11t@developer.gserviceaccount.com',
+              keyFile: 'my.pem'
+            }
+    }, 
+
+    function sheetReady(err, spreadsheet) {
+      if (err) {
+        throw err;
+      } 
+
+      //view spreadsheet
+      spreadsheet.receive(function(err, rows, info) {
+        if (err) {
+          throw err;
+        }
+        console.dir(rows);
+        //console.dir(info);
+      });
+      
+
+      //iterating over array of objects(listOfObjs) and adding to spreadsheet
+      var itemNum = 0;
+      for(var row = 3; row &lt;= listOfObjs.length+2; row++)
+      { 
+          var colNum = 1;
+
+          var rowNum1 = {};
+          rowNum1[row] = {}; 
+          rowNum1[row][colNum++] = listOfObjs[itemNum].item;
+
+          var rowNum2 = {};
+          rowNum2[row] = {};
+          rowNum2[row][colNum++] = listOfObjs[itemNum].requestTime;
+
+          var rowNum3 = {};
+          rowNum3[row] = {};
+          rowNum3[row][colNum++] = listOfObjs[itemNum++].responseTime;
+                    
+          spreadsheet.add(rowNum1);  
+          spreadsheet.add(rowNum2);  
+          spreadsheet.add(rowNum3);   
+                 
+          console.dir(rowNum1);
+          console.dir(rowNum2);
+          console.dir(rowNum3);         
+    
+          spreadsheet.send(function(err) 
+          {
+            if(err) throw err;
+            console.log("Updated added!!!'");
+          });
+      }
+  });
+/* end of the script */</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-edit-google-spreadsheet.html">edit-google-spreadsheet</a></li><li><a href="module-logger.html">logger</a></li><li><a href="module-nano.html">nano</a></li><li><a href="module-nodemailer.html">nodemailer</a></li><li><a href="module-nodemailer-smtp-pool.html">nodemailer-smtp-pool</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Tue Dec 02 2014 13:15:53 GMT+0530 (IST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

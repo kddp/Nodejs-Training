@@ -1,0 +1,36 @@
+{
+	"database" : {
+			"databaseLink": "http://localhost:5984",
+			"databaseName": "test"
+			},
+
+	"xoauth2" : { 
+			"user": "nag.abhi2006@gmail.com",
+			"clientId": "780120602790-7er43b0m89r8h7q4ov4gdugkg1dsmq63.apps.googleusercontent.com",
+                    	"clientSecret": "9AvPrkVvZUpuB3DVjkNs1PQR",
+                    	"refreshToken": "1/RXDa82_gVXlCtXHWn4KjcFDH8QGXAhbH-BFJdBuZj0oMEudVrK5jSpoR30zcRFq6"
+			},
+
+	"mail" : {
+			"from": "Abhishek", 
+			"to": "nag.abhi2006@gmail.com", 
+			"subject": "Test mail using NodeJS",
+			"mailBody": "<h1>Test Mail</h1><br/><b><Hello!!!></b></br>This test mail is from nodemailer."
+			},
+
+	"oauth" : {
+              		"email": "780120602790-k2dk9s8lfoqnp19724f4udej91tau11t@developer.gserviceaccount.com",
+              		"key": "my.pem"
+            		},
+
+    	"sheetDetails": {
+    			"sheetName": "Test",
+    			"worksheet":"Sheet1", 
+    			"spreadsheetId": "1xWZtYxwlvR-tN_6JzSA7gx8c6KbA1Jm4c2bHZ793_wQ",
+  			"worksheetId": "od6"
+  			},
+
+  	"logFilePath" : { "path": "__dirname + '/../logs/my.log"},
+
+    	"thresholdTime" : 3
+}

@@ -1,0 +1,51 @@
+{
+	
+	//defines databse details
+	"database" : {
+					"couchIP" : "localhost",		//IP address of couchDB
+					"couchPort" : "5984",				//port number at which couchDB is listening
+					"dbName" : "couchdemo"				//database name
+					},
+
+	
+	//defines authentication data
+	"xoauth2" : { 
+					"user" : "nag.abhi2006@gmail.com",
+					"clientId" : "780120602790-7er43b0m89r8h7q4ov4gdugkg1dsmq63.apps.googleusercontent.com",
+                    "clientSecret" : "9AvPrkVvZUpuB3DVjkNs1PQR",
+                    "refreshToken" : "1/RXDa82_gVXlCtXHWn4KjcFDH8QGXAhbH-BFJdBuZj0oMEudVrK5jSpoR30zcRFq6"
+					},
+
+	//defines mail data
+	"mail" : {
+				"from" : "Abhishek", 								//Name of the sender of the email
+				"to" : "nag.abhi2006@gmail.com", 					//Email id of the reciever
+				"subject" : "Test mail using NodeJS", 				//Subject of the email
+				"mailBody" : "<h3>Weather Request Delay logger Test Mail</h3><br/><b><Hello!!!></b></br>This test mail is from nodemailer."
+				},
+
+	//defines reusable transport object
+	"transport" : {
+						"service" : "gmail", 					//Built in email service
+						"maxConnections" : 10, 					//Count of maximum simultaneous connections to make against the SMTP server
+						"maxMessages" : 10    					//Set max no of email sent at a time
+						},
+
+	//defines authentication details
+	"oauth" : {
+              	"email" : "780120602790-k2dk9s8lfoqnp19724f4udej91tau11t@developer.gserviceaccount.com", 
+              	"key" : "my.pem"
+            	},
+
+   //define google spreedsheet details
+    "sheetDetails" : {
+    					"sheetName" : "Test",
+    					"worksheet" :"Sheet1", 
+    					"spreadsheetId" : "1xWZtYxwlvR-tN_6JzSA7gx8c6KbA1Jm4c2bHZ793_wQ",
+  						"worksheetId" : "od6"
+  						},
+
+  	"logFilePath" : { "path" : "/home/abhisheknag/nodejs/logs/my.log" },	//path to with log file should be save
+
+    "thresholdTime" : 30000				//setting threshold time in milliseconds
+}

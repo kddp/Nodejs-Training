@@ -1,0 +1,167 @@
+{
+   "_id": "59fef8102a0ec429a37b8e97d3000961",
+   "_rev": "3-1792facf6782c7104bb9e4de80fb2a84",
+   "request_type": "WXREQ",
+   "processed": true,
+   "subject": "WXREQ N373HA/0017/27 LAS HNL 270855 271500",
+   "request_datetime": "2014-09-27T06:48:02.000Z",
+   "parent_request": true,
+   "regn_no": "N373HA",
+   "flight_no": "0017",
+   "flight_date": "27",
+   "orig_apt": "LAS",
+   "dest_apt": "HNL",
+   "flight_dep": "270855",
+   "flight_arr": "271500",
+   "route_positions": [
+       {
+           "name": "KLAS",
+           "lat_is_north": true,
+           "latitude_dmt": 36.06666666666667,
+           "lon_is_east": false,
+           "longitude_dmt": 115.15
+       },
+       {
+           "name": "SHEAD",
+           "lat_is_north": true,
+           "latitude_dmt": 35.88333333333333,
+           "lon_is_east": false,
+           "longitude_dmt": 115.96666666666667
+       },
+       {
+           "name": "DBIGE",
+           "lat_is_north": true,
+           "latitude_dmt": 36.43333333333333,
+           "lon_is_east": false,
+           "longitude_dmt": 116.6
+       },
+       {
+           "name": "BIKKR",
+           "lat_is_north": true,
+           "latitude_dmt": 36.56666666666667,
+           "lon_is_east": false,
+           "longitude_dmt": 116.75
+       },
+       {
+           "name": "KENNO",
+           "lat_is_north": true,
+           "latitude_dmt": 37.28333333333333,
+           "lon_is_east": false,
+           "longitude_dmt": 117.3
+       },
+       {
+           "name": "OAL",
+           "lat_is_north": true,
+           "latitude_dmt": 38,
+           "lon_is_east": false,
+           "longitude_dmt": 117.76666666666667
+       },
+       {
+           "name": "OAK",
+           "lat_is_north": true,
+           "latitude_dmt": 37.71666666666667,
+           "lon_is_east": false,
+           "longitude_dmt": 122.21666666666667
+       },
+       {
+           "name": "BEBOP",
+           "lat_is_north": true,
+           "latitude_dmt": 36.983333333333334,
+           "lon_is_east": false,
+           "longitude_dmt": 125
+       },
+       {
+           "name": "BAART",
+           "lat_is_north": true,
+           "latitude_dmt": 36.45,
+           "lon_is_east": false,
+           "longitude_dmt": 126.93333333333334
+       },
+       {
+           "name": "BARAZ",
+           "lat_is_north": true,
+           "latitude_dmt": 34.016666666666666,
+           "lon_is_east": false,
+           "longitude_dmt": 134.33333333333334
+       },
+       {
+           "name": "BILLO",
+           "lat_is_north": true,
+           "latitude_dmt": 31.166666666666668,
+           "lon_is_east": false,
+           "longitude_dmt": 141.28333333333333
+       },
+       {
+           "name": "BEKME",
+           "lat_is_north": true,
+           "latitude_dmt": 27.883333333333333,
+           "lon_is_east": false,
+           "longitude_dmt": 147.96666666666667
+       },
+       {
+           "name": "BOARD",
+           "lat_is_north": true,
+           "latitude_dmt": 24.283333333333335,
+           "lon_is_east": false,
+           "longitude_dmt": 154.25
+       },
+       {
+           "name": "BITTA",
+           "lat_is_north": true,
+           "latitude_dmt": 23.516666666666666,
+           "lon_is_east": false,
+           "longitude_dmt": 155.46666666666667
+       },
+       {
+           "name": "SOMOH",
+           "lat_is_north": true,
+           "latitude_dmt": 22.316666666666666,
+           "lon_is_east": false,
+           "longitude_dmt": 156.33333333333334
+       },
+       {
+           "name": "MAGGI",
+           "lat_is_north": true,
+           "latitude_dmt": 21.833333333333332,
+           "lon_is_east": false,
+           "longitude_dmt": 156.95
+       },
+       {
+           "name": "BAMBO",
+           "lat_is_north": true,
+           "latitude_dmt": 21.4,
+           "lon_is_east": false,
+           "longitude_dmt": 157.5
+       },
+       {
+           "name": "GRITL",
+           "lat_is_north": true,
+           "latitude_dmt": 21.316666666666666,
+           "lon_is_east": false,
+           "longitude_dmt": 157.61666666666667
+       },
+       {
+           "name": "CKH",
+           "lat_is_north": true,
+           "latitude_dmt": 21.25,
+           "lon_is_east": false,
+           "longitude_dmt": 157.7
+       },
+       {
+           "name": "PHNL",
+           "lat_is_north": true,
+           "latitude_dmt": 21.316666666666666,
+           "lon_is_east": false,
+           "longitude_dmt": 157.91666666666666
+       }
+   ],
+   "departure_time_UTC": "2014-10-27T08:55:00.000Z",
+   "arrival_time_UTC": "2014-10-27T15:00:00.000Z",
+   "alt_apts": [
+       "KLAS",
+       "PHNL",
+       "PHOG",
+       "KSFO",
+       "PHTO"
+   ]
+}
